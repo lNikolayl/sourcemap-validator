@@ -6,7 +6,8 @@ var validate
   , each = require('lodash.foreach')
   , template = require('lodash.template')
   , jsesc = require('jsesc')
-  , fancyArrow = String.fromCharCode(parseInt(2192,16));
+  , fancyArrow = String.fromCharCode(parseInt(2192,16))
+  , codec = require('@jridgewell/sourcemap-codec');
 
 // Lifted from UglifyJS
 toAscii = function (str, identifier) {
@@ -33,7 +34,7 @@ validateMapping = function (mapping) {
 
   // If the source is null, the original location data has been explicitly
   // omitted from the map to clear the mapped state of a line.
-  if (typeof mapping.source === "string") {
+  if (typeof mapping.source === "string" && mapping.source.length > 1) {
     assert.ok(mapping.originalColumn!=null, 'missing original column, mapping: ' + prettyMapping);
     assert.ok(mapping.originalLine!=null, 'missing original line, mapping: ' + prettyMapping);
     assert.ok(mapping.originalColumn >= 0, 'original column must be greater or equal to zero, mapping: ' + prettyMapping);
@@ -49,7 +50,7 @@ createBuffer = function (str, encoding) {
 };
 
 // Validates an entire sourcemap
-validate = function (min, map, srcs) {
+validate = async function (min, map, srcs) {
   var consumer
     , mappingCount = 0
     , splitSrcs = {};

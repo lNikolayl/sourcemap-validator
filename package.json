@@ -24,10 +24,11 @@
     "url": "git://github.com/ben-ng/sourcemap-validator.git"
   },
   "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.15",
     "jsesc": "~0.3.x",
     "lodash.foreach": "^4.5.0",
     "lodash.template": "^4.5.0",
-    "source-map": "~0.1.x"
+    "source-map": "0.6.1"
   },
   "files": [
     "index.js"

@@ -6,7 +6,7 @@ var validate = require('..')
   , validDir = path.join(__dirname, 'fixtures', 'valid')
   , tests = {};
 
-tests['Invalid Backbone.js should throw name mismatch'] = function () {
+tests['Invalid Backbone.js should throw name mismatch'] = async function () {
   var bbDir = path.join(invalidDir, 'Backbone')
     , raw = fs.readFileSync(path.join(bbDir, 'backbone.js')).toString()
     , min = fs.readFileSync(path.join(bbDir, 'backbone.min.js')).toString()
@@ -28,7 +28,7 @@ tests['Invalid Backbone.js should throw name mismatch'] = function () {
   throw new Error('The invalid Backbone sourcemap should throw');
 };
 
-tests['Invalid Jquery should throw name mismatch'] = function () {
+tests['Invalid Jquery should throw name mismatch'] = async function () {
   var bbDir = path.join(invalidDir, 'Jquery')
     , raw = fs.readFileSync(path.join(bbDir, 'jquery-1.10.2.js')).toString()
     , min = fs.readFileSync(path.join(bbDir, 'jquery-1.10.2.min.js')).toString()
@@ -50,7 +50,7 @@ tests['Invalid Jquery should throw name mismatch'] = function () {
   throw new Error('The invalid Jquery sourcemap should throw');
 };
 
-tests['Invalid Jquery should throw source missing'] = function () {
+tests['Invalid Jquery should throw source missing'] = async function () {
   var bbDir = path.join(invalidDir, 'Jquery')
     , raw = fs.readFileSync(path.join(bbDir, 'jquery-1.10.2.js')).toString()
     , min = fs.readFileSync(path.join(bbDir, 'jquery-1.10.2.min.js')).toString()
@@ -78,7 +78,7 @@ tests['Valid Underscore should not throw'] = function () {
     , min = fs.readFileSync(path.join(usDir, 'underscore.min.js')).toString()
     , map = fs.readFileSync(path.join(usDir, 'underscore.min.map')).toString();
 
-  assert.doesNotThrow(function () {
+  assert.doesNotThrow(async function () {
     validate(min, map, {'underscore.js': raw});
   }, 'Valid Underscore sourcemap should not throw');
 };
@@ -87,7 +87,7 @@ tests['Valid Minifyified bundle with inline sourcemap should not throw'] = funct
   var mfDir = path.join(validDir, 'Minifyified')
     , min = fs.readFileSync(path.join(mfDir, 'bundle.min.js')).toString();
 
-  assert.doesNotThrow(function () {
+  assert.doesNotThrow(async function () {
     validate(min);
   }, 'Valid Minifyified inline sourcemap and inline sourceContent should not throw');
 };
@@ -97,7 +97,7 @@ tests['Valid Minifyified bundle with inline sourcemap and charset should not thr
     , min = fs.readFileSync(path.join(mfDir, 'bundle.min.js')).toString()
       .replace('/json;base64,', '/json;charset=utf-8;base64,');
 
-  assert.doesNotThrow(function () {
+  assert.doesNotThrow(async function () {
     validate(min);
   }, 'Valid Minifyified inline sourcemap and inline sourceContent should not throw');
 };
@@ -107,7 +107,7 @@ tests['Valid Minifyified bundle with charset without hyphen should not throw'] =
     , min = fs.readFileSync(path.join(mfDir, 'bundle.min.js')).toString()
       .replace('/json;base64,', '/json;charset=utf8;base64,');
 
-  assert.doesNotThrow(function () {
+  assert.doesNotThrow(async function () {
     validate(min);
   }, 'Valid Minifyified inline sourcemap and inline sourceContent should not throw');
 };
@@ -116,7 +116,7 @@ tests['Valid Babel map should not throw'] = function () {
   var babelDir = path.join(validDir, 'Babel')
     , map = fs.readFileSync(path.join(babelDir, 'router.js.map')).toString();
 
-  assert.doesNotThrow(function () {
+  assert.doesNotThrow(async function () {
     validate(null, map);
   }, 'Valid Minifyified inline sourcemap and inline sourceContent should not throw');
 };

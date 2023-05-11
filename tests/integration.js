@@ -21,7 +21,7 @@ each(fixtures, function (fixture) {
         , fromString: true
         });
 
-    assert.doesNotThrow(function () {
+    assert.doesNotThrow(async function () {
       validate(result.code, result.map, {'?': raw});
     }, 'Valid ' + fixture + ' sourcemap should not throw');
   };
